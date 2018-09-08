@@ -6,6 +6,8 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import axios from '../../../axios-orders';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
 
@@ -91,30 +93,21 @@ class ContactData extends Component {
                 valid: true
             }
         },
-        isFormValid: false,
-        loading : false
+        isFormValid: false
     }
 
     orderHandler = (event)=>{
         event.preventDefault();
-        this.setState({loading : true});
         const formData = {};
         for(let inputElement in this.state.orderForm){
             formData[inputElement] = this.state.orderForm[inputElement].value;
         }
-        const order ={
+        const order = {
             ingredients: this.props.ings,
             totalPrice: this.props.price,
             orderForm : formData
         };
-        axios.post('/orders.json',order)
-            .then(response => {
-                this.setState({loading : true});
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({loading : true});
-            });
+        this.props.onStartBurger(order);
     }
 
     inputChangedHandler = (event,inputIdentifier) => {
@@ -178,7 +171,7 @@ class ContactData extends Component {
                 <Button btnType="Success" disabled={!this.state.isFormValid}>SUBMIT</Button>
             </form>
         );
-        if(this.state.loading){
+        if(this.props.loading){
             form = <Spinner/>;
         }
         return(
@@ -192,9 +185,16 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ings : state.ingredients,
-        price : state.totalPrice
+        ings : state.burgerBuilder.ingredients,
+        price : state.burgerBuilder.totalPrice,
+        loading : state.order.loading
     };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onStartBurger : (orderData) => dispatch(actions.purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(ContactData,axios));
