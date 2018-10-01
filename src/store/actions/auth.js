@@ -26,7 +26,7 @@ export const logout = (logoutTime) => {
     return dispatch => {
         setTimeout(() => {
             dispatch(authLogout());
-        },logoutTime*3);
+        },logoutTime*10);
     };
 };
 
