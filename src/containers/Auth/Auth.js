@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
@@ -98,7 +99,18 @@ class Auth extends Component {
 
     render(){
 
-        
+        let ingredients = Object.values(this.props.ingredients);
+        let ingredientsCount = ingredients.reduce((a,b) => a+b,0);
+        let burgerBuilding = ingredientsCount > 0;
+
+        let redirectAuth = null;
+        if(this.props.isLoggedIn){
+            if(burgerBuilding){
+                redirectAuth = <Redirect to="/checkout"/>;
+            }else{
+                redirectAuth = <Redirect to="/"/>;
+            }
+        }
 
         let formElementsArray = [];
         for (let key in this.state.controls){
@@ -134,6 +146,7 @@ class Auth extends Component {
 
         return (
             <div className={classes.Auth}>
+                {redirectAuth}
                 {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
@@ -148,7 +161,9 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading : state.auth.loading,
-        error : state.auth.error
+        error : state.auth.error,
+        isLoggedIn : state.auth.token !== null,
+        ingredients : state.burgerBuilder.ingredients
     }
 }
 
