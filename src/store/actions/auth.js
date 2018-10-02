@@ -23,7 +23,7 @@ export const authFailure = (error) => {
 };
 
 export const logout = (logoutTime) => {
-    console.log("logout time");
+    //console.log("logout time");
     return dispatch => {
         setTimeout(() => {
             dispatch(authLogout());
@@ -32,7 +32,7 @@ export const logout = (logoutTime) => {
 };
 
 export const authLogout = () => {
-    console.log("logout");
+    //console.log("logout");
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('expirationDate');
@@ -71,7 +71,7 @@ export const auth = (email,password,isSignup) => {
         }
         axios.post(url,authData)
         .then(response => {
-            console.log(response);
+            //console.log(response);
             const expirationDate = new Date(new Date().getTime() + response.data.expiresIn*1000);
             localStorage.setItem('token',response.data.idToken);
             localStorage.setItem('userId',response.data.localId);
@@ -80,7 +80,7 @@ export const auth = (email,password,isSignup) => {
             dispatch(logout(response.data.expiresIn));
         })
         .catch(err => {
-            console.log(err.response);
+            //console.log(err.response);
             dispatch(authFailure(err.response.data.error.message));
         });
     };

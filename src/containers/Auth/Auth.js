@@ -102,11 +102,11 @@ class Auth extends Component {
         let redirectAuth = null;
         if(this.props.isLoggedIn){
             let ingredients = Object.values(this.props.ingredients);
-            console.log(ingredients);
+            //console.log(ingredients);
             let ingredientsCount = ingredients.reduce((a,b) => a+b,0);
-            console.log(ingredientsCount);
+            //console.log(ingredientsCount);
             let burgerBuilding = ingredientsCount > 0;
-            console.log(burgerBuilding);
+            //console.log(burgerBuilding);
             if(burgerBuilding){
                 redirectAuth = <Redirect to="/checkout"/>;
             }else{
