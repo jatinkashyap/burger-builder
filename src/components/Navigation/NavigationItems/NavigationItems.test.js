@@ -7,9 +7,9 @@ import NavigationItem from './NavigationItem/NavigationItem';
 
 configure({ adapter : new Adapter()});
 
-describe('<NavigationItems/>',() => {
+describe('<NavigationItems/>',() => {jatinkashy
     beforeEach(() => {
-        
+
     })
 
     it('should render two <NavigationItem/> elemets if not authenticated',() => {
