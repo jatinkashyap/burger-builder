@@ -7,10 +7,10 @@ import NavigationItem from './NavigationItem/NavigationItem';
 
 configure({ adapter : new Adapter()});
 
-describe('<NavigationItems/>',() => {jatinkashy
-    beforeEach(() => {
+describe('<NavigationItems/>',() => {
+    /* beforeEach(() => {
 
-    })
+    }) */
 
     it('should render two <NavigationItem/> elemets if not authenticated',() => {
         const wrapper = shallow(<NavigationItems/>);
@@ -19,6 +19,12 @@ describe('<NavigationItems/>',() => {jatinkashy
 
     it('should render three <NavigationItem/> elemets if authenticated',() => {
         const wrapper = shallow(<NavigationItems isLoggedIn/>);
+        //wrapper.setProps({isLoggedIn : true});
         expect(wrapper.find(NavigationItem)).toHaveLength(3);
+    });
+
+    it('should contain NavigationItem link="/logout">Logout</NavigationItem> if authenticated',() => {
+        const wrapper = shallow(<NavigationItems isLoggedIn/>);
+        expect(wrapper.contains(<NavigationItem link="/logout">Logout</NavigationItem>)).toBe(true);
     });
 });
