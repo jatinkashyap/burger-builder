@@ -33,11 +33,11 @@ export const logout = (logoutTime) => {
 
 export const authLogout = () => {
     //console.log("logout");
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('expirationDate');
+    //localStorage.removeItem('token');
+    //localStorage.removeItem('userId');
+    //localStorage.removeItem('expirationDate');
     return {
-        type : actionTypes.AUTH_LOGOUT
+        type : actionTypes.AUTH_INITIATE_LOGOUT
     };
 };
 
